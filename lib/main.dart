@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/create_account.dart';
 import 'package:rumailah/screens/login_otp.dart';
 import 'package:rumailah/screens/select_language.dart';
 import 'package:rumailah/screens/splash_screen.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:LoginOtp(),
+      home:CreateAccount()
     );
   }
 }

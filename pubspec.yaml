@@ -63,6 +63,7 @@ flutter:
     - assets/images/splashscreen/
     - assets/images/selectlanguagescreen/
     - assets/images/loginotp/
+    - assets/images/createaccount/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
