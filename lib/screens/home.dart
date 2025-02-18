@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:rumailah/screens/account_menu.dart';
+import 'package:rumailah/screens/home_page.dart';
+import 'package:rumailah/screens/scan_qr_code.dart';
+import 'package:rumailah/screens/store_location.dart';
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _selectedIndex = 0;
+
+  // Screens List
+  final List<Widget> _screens = [
+    HomePage(),
+    ScanQrCode(),
+    StoreLocation(),
+    AccountMenu(),
+  ];
+
+  // Handle Bottom Nav Bar item tap
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor:Color(0xFFF7F6F6),
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: ClipPath(
+        clipper: WavyNavBarClipper(), // Custom clip for wave effect
+        child: BottomAppBar(
+          color: Colors.white,
+          elevation: 10,
+          child: Container(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.home_outlined, size: 30),
+                  color: _selectedIndex == 0 ? Color(0xFF26375F) : Color(0xFFC7C5C9),
+                  onPressed: () => _onItemTapped(0),
+                ),
+                IconButton(
+                  icon: Icon(Icons.qr_code_scanner_outlined, size: 30),
+                  color: _selectedIndex == 1 ? Color(0xFF26375F) : Color(0xFFC7C5C9),
+                  onPressed: () => _onItemTapped(1),
+                ),
+                SizedBox(width: 120), // Space for the floating button
+                IconButton(
+                  icon: Icon(Icons.location_on_outlined, size: 30),
+                  color: _selectedIndex == 2 ? Color(0xFF26375F) : Color(0xFFC7C5C9),
+                  onPressed: () => _onItemTapped(2),
+                ),
+
+                IconButton(
+                  icon: Icon(Icons.person_outline, size: 30),
+                  color: _selectedIndex == 3 ? Color(0xFF26375F) : Color(0xFFC7C5C9),
+                  onPressed: () => _onItemTapped(3),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFF26375F85),
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: FloatingActionButton(
+          backgroundColor: Color(0xFF4D5E47),
+          shape: CircleBorder(),
+          onPressed: () {},
+          child: Image.asset("assets/images/homepage/cup.png"),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+}
+
+// Custom clipper for wave effect in the Bottom Navigation Bar
+class WavyNavBarClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    double width = size.width;
+    double height = size.height;
+    double notchRadius = 40;
+
+    Path path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(width * 0.3, 0)
+      ..quadraticBezierTo(width * 0.38, notchRadius - 10, width * 0.42, notchRadius)
+      ..quadraticBezierTo(width * 0.50, notchRadius + 20, width * 0.58, notchRadius)
+      ..quadraticBezierTo(width * 0.62, notchRadius - 10, width * 0.7, 0)
+      ..lineTo(width, 0)
+      ..lineTo(width, height)
+      ..lineTo(0, height)
+      ..close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
