@@ -33,10 +33,9 @@ class _HomeState extends State<Home> {
       backgroundColor:Color(0xFFF7F6F6),
       body: _screens[_selectedIndex],
       bottomNavigationBar: ClipPath(
-        clipper: WavyNavBarClipper(), // Custom clip for wave effect
+        clipper: WavyNavBarClipper(), 
         child: BottomAppBar(
           color: Colors.white,
-          elevation: 10,
           child: Container(
             height: 60,
             child: Row(

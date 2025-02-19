@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   intl_phone_field: ^3.2.0
   dotted_line: ^3.2.3
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,7 @@ flutter:
     - assets/images/scanQR/
     - assets/images/paymentpage/
     - assets/images/orderplacedsuccessfuly/
+    - assets/images/selectordermanu/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
