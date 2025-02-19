@@ -63,14 +63,19 @@ class _SelectOrderMenuState extends State<SelectOrderMenu> {
              children: [
                Container(
                  height: 150,
-                 color: Colors.white,
+                 decoration: BoxDecoration(
+                     color: Colors.white,
+                     borderRadius: BorderRadius.only(
+                         bottomLeft: Radius.circular(15.0),
+                         bottomRight: Radius.circular(15.0))
+                 ),
                  child: Column(
                    children: [
                      SizedBox(height: 20,),
                      Padding(
                        padding: const EdgeInsets.symmetric(horizontal: 16),
                        child: Container(
-                         width: 320,
+                         width: 350,
                          height: 60,
                          child: TextField(
                            decoration: InputDecoration(

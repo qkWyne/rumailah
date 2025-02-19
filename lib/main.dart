@@ -6,6 +6,7 @@ import 'package:rumailah/screens/home.dart';
 import 'package:rumailah/screens/home_page.dart';
 import 'package:rumailah/screens/login_otp.dart';
 import 'package:rumailah/screens/order_placed%20_successfully.dart';
+import 'package:rumailah/screens/order_view.dart';
 import 'package:rumailah/screens/payment_page.dart';
 import 'package:rumailah/screens/select_language.dart';
 import 'package:rumailah/screens/select_order_menu.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home:SelectOrderMenu(),
+      home:OrderView()
     );
   }
 }
