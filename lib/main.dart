@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/account_menu.dart';
 import 'package:rumailah/screens/allow_location.dart';
+import 'package:rumailah/screens/checkout.dart';
 import 'package:rumailah/screens/create_account.dart';
 import 'package:rumailah/screens/edit_account.dart';
 import 'package:rumailah/screens/home.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: LoginOtp(),
+      home: CheckoutScreen()
     );
   }
 }
