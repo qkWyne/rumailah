@@ -7,6 +7,11 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
+  String? selectedGender;
+  final List<Map<String, dynamic>> genderOptions = [
+    {'value': 'male', 'label': 'Male', 'icon': Icons.male},
+    {'value': 'female', 'label': 'Female', 'icon': Icons.female},
+  ];
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -156,9 +161,15 @@ class _CreateAccountState extends State<CreateAccount> {
                       SizedBox(height: 5,),
                       Container(
                         width: 310,
-                        child: TextFormField(
+                        child: DropdownButtonFormField<String>(
+                          value: selectedGender,
+                          onChanged: (String? newValue){
+                            setState(() {
+                              selectedGender = newValue;
+                            });
+                          },
                           decoration: InputDecoration(
-                              hintText: "Male",
+                              hintText: "selectedGender",
                               hintStyle: TextStyle(color: Color(0xFFB9B7B7)),
                               prefixIcon: Image.asset("assets/images/createaccount/gender.png",),
                               focusedBorder: OutlineInputBorder(
@@ -175,7 +186,17 @@ class _CreateAccountState extends State<CreateAccount> {
                                   borderSide: BorderSide()
                               )
                           ),
-                        ),
+                          items: genderOptions.map((gender){
+                            return DropdownMenuItem<String>(
+                                value: gender['value'],
+                                child: Row(
+                                children: [
+                            Text(gender['label']),
+                            ],
+                            ),
+                            );
+                          }).toList(),
+                        )
                       ),
                       SizedBox(height: 20,),
                       Container(

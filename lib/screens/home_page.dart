@@ -58,6 +58,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: Color(0xFFF7F6F6),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -266,7 +267,7 @@ class StoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 250,
-      margin: EdgeInsets.only(right: 10),
+      margin: EdgeInsets.only(right: 10,bottom: 130),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

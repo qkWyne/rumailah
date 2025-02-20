@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rumailah/screens/account_menu.dart';
 import 'package:rumailah/screens/home_page.dart';
 import 'package:rumailah/screens/scan_qr_code.dart';
-import 'package:rumailah/screens/store_location.dart';
+import 'package:rumailah/screens/select_store_location.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -17,8 +17,8 @@ class _HomeState extends State<Home> {
   final List<Widget> _screens = [
     HomePage(),
     ScanQrCode(),
-    StoreLocation(),
-    AccountMenu(),
+    SelectStoreLocation(),
+    AccountPage(),
   ];
 
   // Handle Bottom Nav Bar item tap
@@ -30,13 +30,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Color(0xFFF7F6F6),
+      extendBody: true,
       body: _screens[_selectedIndex],
       bottomNavigationBar: ClipPath(
         clipper: WavyNavBarClipper(), 
         child: BottomAppBar(
           color: Colors.white,
           child: Container(
+            color: Colors.transparent,
             height: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,6 +70,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: Container(
+        margin: EdgeInsets.only(bottom: 10),
         width: 80,
         height: 80,
         decoration: BoxDecoration(

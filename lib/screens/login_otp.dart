@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:rumailah/screens/otp_verify.dart';
 
 class LoginOtp extends StatefulWidget {
   const LoginOtp({super.key});
@@ -28,10 +29,7 @@ class _LoginOtpState extends State<LoginOtp> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      )
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20))
                   ),
                   child: Column(
                     children: [
@@ -115,6 +113,7 @@ class _LoginOtpState extends State<LoginOtp> {
                                 backgroundColor:Color(0xFF4D5E47),
                                 foregroundColor: Colors.white),
                             onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => OtpVerify()));
                             }, child: Text("Get OTP",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                       ),
                       SizedBox(height: 10,),

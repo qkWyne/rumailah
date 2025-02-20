@@ -24,10 +24,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  )
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20))
                 ),
                 child: Column(
                   children: [

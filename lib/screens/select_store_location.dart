@@ -110,82 +110,85 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: ListView.builder(
-                      itemCount: stores.length,
-                      itemBuilder: (context, index) {
-                        final store = stores[index];
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = index; // Update selected store
-                            });
-                          },
-                          child: Container(
-                            width: 300,
-                            height: 150,
-                            margin: EdgeInsets.only(bottom: 12),
-                            padding: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2)),
-                              ],
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Radio(
-                                  value: index,
-                                  groupValue: selectedIndex,
-                                  activeColor: Color(0xFFEF6010),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedIndex = value;
-                                    });
-                                  },
-                                ),
-                                SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${stores[index]["name"]}",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(
-                                              0xFF4E5D3B), // Greenish color
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        "${stores[index]["distance"]}",
-                                        style: TextStyle(
-                                            color: Color(0xFF07074F),
-                                            fontSize: 14),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        stores[index]["address"].toString(),
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 13),
-                                      ),
-                                    ],
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 30),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: ListView.builder(
+                        itemCount: stores.length,
+                        itemBuilder: (context, index) {
+                          final store = stores[index];
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index; // Update selected store
+                              });
+                            },
+                            child: Container(
+                              width: 300,
+                              height: 150,
+                              margin: EdgeInsets.only(bottom: 12),
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2)),
+                                ],
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Radio(
+                                    value: index,
+                                    groupValue: selectedIndex,
+                                    activeColor: Color(0xFFEF6010),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedIndex = value;
+                                      });
+                                    },
                                   ),
-                                ),
-                              ],
+                                  SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${stores[index]["name"]}",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(
+                                                0xFF4E5D3B), // Greenish color
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          "${stores[index]["distance"]}",
+                                          style: TextStyle(
+                                              color: Color(0xFF07074F),
+                                              fontSize: 14),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          stores[index]["address"].toString(),
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 13),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),

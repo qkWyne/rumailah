@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/account_menu.dart';
 import 'package:rumailah/screens/allow_location.dart';
 import 'package:rumailah/screens/create_account.dart';
 import 'package:rumailah/screens/edit_account.dart';
@@ -7,6 +8,7 @@ import 'package:rumailah/screens/home_page.dart';
 import 'package:rumailah/screens/login_otp.dart';
 import 'package:rumailah/screens/order_placed%20_successfully.dart';
 import 'package:rumailah/screens/order_view.dart';
+import 'package:rumailah/screens/otp_verify.dart';
 import 'package:rumailah/screens/payment_page.dart';
 import 'package:rumailah/screens/select_language.dart';
 import 'package:rumailah/screens/select_order_menu.dart';
@@ -27,9 +29,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home:OrderView()
+      home: LoginOtp(),
     );
   }
 }
