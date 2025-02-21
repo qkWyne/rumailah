@@ -18,7 +18,7 @@ class _AllowLocationState extends State<AllowLocation> {
             child: Container(
               width: 250,
               height: 250,
-              child: Image.asset("assets/images/allowlocation/gray.png"),
+              child: Image.asset("assets/images/createaccount/gray.png"),
             ),
           ),
                Center(
@@ -27,7 +27,7 @@ class _AllowLocationState extends State<AllowLocation> {
                        children: [
                          SizedBox(height: 100,),
                          Container(
-                           child: Image.asset("assets/images/createaccount/location.png"),
+                           child: Image.asset("assets/images/allowlocation/location.png"),
                          ),
                          SizedBox(height: 10,),
                          Container(

@@ -1,8 +1,60 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  Map<int, int> itemCounts = {};
+
+  void _incrementCounter(int index) {
+    setState(() {
+      itemCounts[index] = (itemCounts[index] ?? 1) + 1;
+    });
+  }
+
+  void _decrementCounter(int index) {
+    setState(() {
+      if ((itemCounts[index] ?? 1) > 1) {
+        itemCounts[index] = (itemCounts[index] ?? 1) - 1;
+      }if((itemCounts[index] ?? 1) > 1){
+        itemCounts.remove(index);
+      }
+    });
+  }
+  double calculateTotal() {
+    double total = 0;
+    itemCounts.forEach((index, quantity) {
+      double price = double.parse(orderMenu[index]["price"].split(" ")[1]);
+      total += price * quantity;
+    });
+    return total;
+  }
+
+  final List<Map<String, dynamic>> orderMenu = [
+    {
+      "image": "assets/images/orderview/sandwich.png",
+      "name": "Smoked Turkey",
+      "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
+      "price": "AED 25",
+    },
+    {
+      "image": "assets/images/orderview/burger.png",
+      "name": "Four Cheese and Roas",
+      "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
+      "price": "AED 25",
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
+
+    double total = calculateTotal();
+    double discount = 0;
+    double finalTotal = total - discount;
+
     return GestureDetector(
       onTap: ()=>FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -27,7 +79,7 @@ class CheckoutScreen extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                        backgroundColor: Color(0xFF4D5E4740),
+                        backgroundColor: Colors.grey.shade300,
                         child: Icon(Icons.store_mall_directory, size: 40, color: Color(0xFF4D5E47))),
                     SizedBox(width: 10),
                     Column(
@@ -63,42 +115,72 @@ class CheckoutScreen extends StatelessWidget {
                 color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      // Image.asset(
-                      //     "", width: 60, height: 60, fit: BoxFit.cover),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("name", style: TextStyle(
-                                fontWeight: FontWeight.bold)),
-                            SizedBox(height: 5),
-                            Text("description", style: TextStyle(
-                                color: Colors.grey, fontSize: 12)),
-                            SizedBox(height: 5),
-                            Text("price", style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.blue)),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                            Icons.remove_circle_outline, color: Colors.green),
-                        onPressed: () {},
-                      ),
-                      Text("1", style: TextStyle(fontWeight: FontWeight.bold)),
-                      IconButton(
-                        icon: Icon(Icons.add_circle_outline, color: Colors.green),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
+                  child:ListView.builder(shrinkWrap: true,physics: NeverScrollableScrollPhysics(),itemCount: orderMenu.length,itemBuilder: (context,index){
+                        final order = orderMenu[index];
+                       return Column(
+                         children: [
+                           Row(
+                              children: [
+                                Image.asset(order["image"],scale: 1.5,fit: BoxFit.cover),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(order["name"], style: TextStyle(
+                                          fontWeight: FontWeight.bold,fontSize: 16,color: Color(0xFF60605F))),
+                                      SizedBox(height: 5),
+                                      Text(order["details"], style: TextStyle(
+                                          color: Colors.grey, fontSize: 12)),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [Text(order["price"], style: TextStyle(
+                                            fontWeight: FontWeight.bold, color: Color(0xFF263860),fontSize: 18)),
+                                          Row(
+                                            children: [
+                                              IconButton(
+                                                icon: Icon(
+                                                    Icons.remove_circle_outline, color: Color(0xFF4D5E47)),
+                                                onPressed: () {
+                                                  _decrementCounter(index);
+                                                  print(itemCounts);
+                                                },
+                                              ),
+                                              Text("${itemCounts[index] ?? 1}", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+                                              IconButton(
+                                                icon: Icon(Icons.add_circle, color: Color(0xFF4D5E47)),
+                                                onPressed: () {
+                                                  _incrementCounter(index);
+                                                  print(itemCounts);
+                                                },
+                                              ),],),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                           if (index != orderMenu.length - 1)
+                           Container(
+                             margin: EdgeInsets.only(top: 20,bottom: 20),
+                             child: DottedLine(
+                               direction: Axis.horizontal,
+                               alignment: WrapAlignment.center,
+                               lineLength: double.infinity,
+                               lineThickness: 2.0,
+                               dashLength: 8.0,
+                               dashColor: Color(0xFFADABB0),
+                               dashGapLength: 8.0,
+                             ),
+                           ),
+                         ],
+                       );
+                      }),
+
                 ),
               ),
-              SizedBox(height: 20),
-
+              SizedBox(height: 10),
               Container(
                 color: Colors.white,
                 padding: EdgeInsets.all(20),
@@ -107,7 +189,7 @@ class CheckoutScreen extends StatelessWidget {
                   children: [
                     Text("Voucher",style: TextStyle(color: Color(0xFF3A3A34),
                     fontWeight: FontWeight.bold,fontSize: 18),),
-                    SizedBox(height: 20),
+                    SizedBox(height: 5),
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: "Apply Voucher Code",
@@ -132,7 +214,7 @@ class CheckoutScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Container(
                 color: Colors.white,
                 child: Padding(
@@ -143,17 +225,55 @@ class CheckoutScreen extends StatelessWidget {
                       Text("Bill Details",style: TextStyle(color: Color(0xFF3A3A34),
                           fontWeight: FontWeight.bold,fontSize: 18),),
                       SizedBox(height: 10),
-                      _buildBillRow("MRP", "AED 50"),
-                      _buildBillRow("Voucher", "-AED 1", isDiscount: true),
-                      Divider(),
-                      _buildBillRow("Bill Total", "AED 49", isTotal: true),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("MRP", style: TextStyle(fontSize: 16)),
+                          Text("AED ${total.toStringAsFixed(2)}", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,)),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Voucher", style: TextStyle(fontSize: 16)),
+                          Text("-AED ${discount.toStringAsFixed(2)}", style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                                fontSize: 16
+                              )),
+                        ],
+                      ),
+                    ),
+                      Divider(
+                        thickness:2 ,
+                        color: Color(0xFFEEEEEE),
+                      ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Bill Total", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                      Text("AED ${finalTotal.toStringAsFixed(2)}", style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color:Color(0xFF4D5E47),
+                            fontSize: 18,
+                          )),
+                    ],
+                  ),
+                ),
                     ],
                   ),
                 ),
               ),
               SizedBox(height: 20),
-
               Container(
+                margin: EdgeInsets.only(bottom: 20),
                 width: 310,
                 height: 55,
                 child: ElevatedButton(
@@ -173,20 +293,3 @@ class CheckoutScreen extends StatelessWidget {
     );
   }
 }
-  Widget _buildBillRow(String title, String value, {bool isDiscount = false, bool isTotal = false}) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: TextStyle(fontWeight: isTotal ? FontWeight.bold : FontWeight.normal)),
-          Text(value,
-              style: TextStyle(
-                fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
-                color: isDiscount ? Colors.red : Colors.black,
-              )),
-        ],
-      ),
-    );
-  }
-

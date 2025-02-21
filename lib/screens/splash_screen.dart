@@ -15,10 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Container(color: Color(0xFF4D5E47),),
           Center(
-            child: Image.asset("assets/images/splashscreen/bg.png",)
+            child: Image.asset("assets/images/splashscreen/bg.png")
     ),
           Center(
-            child: Image.asset("assets/images/splashscreen/logo.png")
+            child: Image.asset("assets/images/splashscreen/logo.png",)
     ),
         ],
       )

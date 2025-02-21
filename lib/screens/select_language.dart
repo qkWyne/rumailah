@@ -26,80 +26,82 @@ class _SelectLanguageState extends State<SelectLanguage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20))
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(height: 30,),
-                    Align(
-                      alignment: Alignment(-0.6,0),
-                      child: Text("Please Select App Language",style: TextStyle(fontWeight: FontWeight.bold,
-                      fontSize: 18,color: Color(0xFF4D5E47)),),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      width: 320,
-                      height: 65,
-                      decoration:BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Color(0xFF4D5E47),)
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 30,),
+                      Align(
+                        alignment: Alignment(-0.6,0),
+                        child: Text("Please Select App Language",style: TextStyle(fontWeight: FontWeight.bold,
+                        fontSize: 18,color: Color(0xFF4D5E47)),),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Color(0xFFDFEEDA),
-                              child: const Text('E',style: TextStyle(color:  Color(0xFF4D5E47),
-                              fontWeight: FontWeight.bold,fontSize: 18),),
-                            ),
-                            SizedBox(width: 10,),
-                            Text("English",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
-                          ],
+                      SizedBox(height: 20),
+                      Container(
+                        width: 320,
+                        height: 65,
+                        decoration:BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Color(0xFF4D5E47),)
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Container(
-                      width: 320,
-                      height: 65,
-                      decoration:BoxDecoration(
-                        color: Color(0xFFDFEEDA),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Color(0xFF4D5E47),
-                              child: const Text('AE',style: TextStyle(color:  Color(0xFFDFEEDA),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),),
-                            ),
-                            SizedBox(width: 10,),
-                            Text("اَلْعَرَبِيَّةُ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Image.asset("assets/images/selectlanguagescreen/pic.png"),
-                    ),
-                    Container(
-                      width: 330,
-                      height: 55,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape:  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Color(0xFFDFEEDA),
+                                child: const Text('E',style: TextStyle(color:  Color(0xFF4D5E47),
+                                fontWeight: FontWeight.bold,fontSize: 18),),
                               ),
-                              backgroundColor:Color(0xFF4D5E47),
-                              foregroundColor: Colors.white),
-                          onPressed: (){
-                          }, child: Text("Okay",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
-                    ),
-                    
+                              SizedBox(width: 10,),
+                              Text("English",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20,),
+                      Container(
+                        width: 320,
+                        height: 65,
+                        decoration:BoxDecoration(
+                          color: Color(0xFFDFEEDA),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Color(0xFF4D5E47),
+                                child: const Text('AE',style: TextStyle(color:  Color(0xFFDFEEDA),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),),
+                              ),
+                              SizedBox(width: 10,),
+                              Text("اَلْعَرَبِيَّةُ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Image.asset("assets/images/selectlanguagescreen/pic.png"),
+                      ),
+                      Container(
+                        width: 330,
+                        height: 55,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape:  RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                backgroundColor:Color(0xFF4D5E47),
+                                foregroundColor: Colors.white),
+                            onPressed: (){
+                            }, child: Text("Okay",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
+                      ),
 
-                  ],
+
+                    ],
+                  ),
                 ),
               )),
         ],
