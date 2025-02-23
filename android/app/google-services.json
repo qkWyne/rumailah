@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "328728061866",
+    "project_id": "rumailah-abfce",
+    "storage_bucket": "rumailah-abfce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328728061866:android:9a7ddd6ff5f65801876dd3",
+        "android_client_info": {
+          "package_name": "com.example.rumailah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJXUEOWD1OqOgaIbjnhqoogNvZ64NiHuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

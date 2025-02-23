@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   final Map<String, dynamic> item;
 
   DetailPage({required this.item});
 
   @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(item["name"], style: TextStyle(color: Colors.white),),
+        title: Text(widget.item["name"], style: TextStyle(color: Colors.white),),
         leading: BackButton(color: Colors.white,),
         actions: [
           Padding(
@@ -26,7 +31,7 @@ class DetailPage extends StatelessWidget {
               height: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-                image:DecorationImage(image: AssetImage(item["image1"]),fit: BoxFit.cover,)
+                image:DecorationImage(image: AssetImage(widget.item["image1"]),fit: BoxFit.cover,)
               ),
             ),
             Expanded(
@@ -37,9 +42,9 @@ class DetailPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(item["name"],style: TextStyle(color: Color(0xFF4D5E47),
+                          Text(widget.item["name"],style: TextStyle(color: Color(0xFF4D5E47),
                           fontWeight: FontWeight.bold,fontSize: 30),),
-                          Text(item["price"],style: TextStyle(color: Color(0xFF263860),
+                          Text(widget.item["price"],style: TextStyle(color: Color(0xFF263860),
                           fontSize: 25,fontWeight: FontWeight.bold),),
                           SizedBox(height: 10,),
                           Container(
