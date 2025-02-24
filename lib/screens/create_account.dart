@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/allow_location.dart';
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
 
@@ -169,7 +170,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             });
                           },
                           decoration: InputDecoration(
-                              hintText: "selectedGender",
+                              hintText: "Gender",
                               hintStyle: TextStyle(color: Color(0xFFB9B7B7)),
                               prefixIcon: Image.asset("assets/images/createaccount/gender.png",),
                               focusedBorder: OutlineInputBorder(
@@ -244,6 +245,7 @@ class _CreateAccountState extends State<CreateAccount> {
                                 backgroundColor:Color(0xFF4D5E47),
                                 foregroundColor: Colors.white),
                             onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> AllowLocation()));
                             }, child: Text("Next",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                       ),
                     ],

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rumailah/main.dart';
+import 'package:rumailah/screens/select_language.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -8,6 +11,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3),(){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SelectLanguage()));
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,6 +3,7 @@ import 'package:rumailah/screens/about_us.dart';
 import 'package:rumailah/screens/edit_account.dart';
 import 'package:rumailah/screens/favorites_page.dart';
 import 'package:rumailah/screens/home.dart';
+import 'package:rumailah/screens/my_orders.dart';
 import 'package:rumailah/screens/order_view.dart';
 import 'package:rumailah/screens/privacy_policy.dart';
 import 'package:rumailah/screens/scan_qr_code.dart';
@@ -109,7 +110,7 @@ class _AccountPageState extends State<AccountPage> {
                     menuItem("Home","assets/images/accountmenu/home.png",Home()),
                     menuItem("Reward Points", "assets/images/accountmenu/RewardPoints.png",SelectOrderMenu()),
                     menuItem("Scan", "assets/images/accountmenu/Scan.png",ScanQrCode()),
-                    menuItem("My Orders", "assets/images/accountmenu/order.png",OrderView()),
+                    menuItem("My Orders", "assets/images/accountmenu/order.png",MyOrders()),
                     menuItem("Location", "assets/images/accountmenu/Location.png",SelectStoreLocation()),
                     menuItem("Favorites", "assets/images/accountmenu/favorites.png",FavoritesPage()),
                     menuItem("About Us", "assets/images/accountmenu/about_us.png",AboutUs()),

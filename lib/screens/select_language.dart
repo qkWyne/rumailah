@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/login_otp.dart';
 class SelectLanguage extends StatefulWidget {
   const SelectLanguage({super.key});
 
@@ -96,6 +97,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                                 backgroundColor:Color(0xFF4D5E47),
                                 foregroundColor: Colors.white),
                             onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginOtp()));
                             }, child: Text("Okay",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                       ),
 

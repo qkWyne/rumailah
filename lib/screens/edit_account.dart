@@ -7,6 +7,11 @@ class EditAccount extends StatefulWidget {
 }
 
 class _EditAccountState extends State<EditAccount> {
+  String? selectedGender;
+  final List<Map<String, dynamic>> genderOptions = [
+    {'value': 'male', 'label': 'Male', 'icon': Icons.male},
+    {'value': 'female', 'label': 'Female', 'icon': Icons.female},
+  ];
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -144,29 +149,43 @@ class _EditAccountState extends State<EditAccount> {
                           ),),
                       ),
                       Container(
-                        width: 310,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: "Male",
-                              hintStyle: TextStyle(color: Color(0xFFB9B7B7)),
-                              prefixIcon: Image.asset("assets/images/createaccount/gender.png",),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 2,color: Color(0xFF4D5E47)),
-                                borderRadius: BorderRadius.circular(8),
+                          width: 310,
+                          child: DropdownButtonFormField<String>(
+                            value: selectedGender,
+                            onChanged: (String? newValue){
+                              setState(() {
+                                selectedGender = newValue;
+                              });
+                            },
+                            decoration: InputDecoration(
+                                hintText: "Gender",
+                                hintStyle: TextStyle(color: Color(0xFFB9B7B7)),
+                                prefixIcon: Image.asset("assets/images/createaccount/gender.png",),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(width: 2,color: Color(0xFF4D5E47)),
+                                  borderRadius: BorderRadius.circular(8),
 
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(width: 2,color:Color(0xFFC3BDBD))
-                              ),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide()
-                              )
-                          ),
-                        ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(width: 2,color:Color(0xFFC3BDBD))
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide()
+                                )
+                            ),
+                            items: genderOptions.map((gender){
+                              return DropdownMenuItem<String>(
+                                value: gender['value'],
+                                child: Row(
+                                  children: [
+                                    Text(gender['label']),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          )
                       ),
                       SizedBox(height: 15,),
                       Container(

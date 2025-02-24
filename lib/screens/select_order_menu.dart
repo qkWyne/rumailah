@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/order_view.dart';
 class SelectOrderMenu extends StatefulWidget {
   const SelectOrderMenu({super.key});
 
@@ -129,26 +130,34 @@ class _SelectOrderMenuState extends State<SelectOrderMenu> {
                      itemCount: ItemsMenu.length,
                      itemBuilder: (context, index) {
                        final item = ItemsMenu[index];
-                       return Column(
-                         children: [
-                         Container(
-                           height:82,
-                           width: 100,
-                           decoration: BoxDecoration(
-                             color: Colors.white,
-                             borderRadius: BorderRadius.circular(12),
-                           ),
-                           child:Padding(
-                               padding: const EdgeInsets.all(10.0),
-                               child: Image.asset(item["image"]!),
-                             ),
-                         ),
-                                 Text(
-                                   item["name"]!,
-                                   style: TextStyle(color: Color(0xFF4E5D3B)),
-                                 ),
+                       return GestureDetector(
+                         onTap: () {
+                           setState(() {
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderView()));
+                           });
 
-                         ],
+                         },
+                         child: Column(
+                           children: [
+                           Container(
+                             height:82,
+                             width: 100,
+                             decoration: BoxDecoration(
+                               color: Colors.white,
+                               borderRadius: BorderRadius.circular(12),
+                             ),
+                             child:Padding(
+                                 padding: const EdgeInsets.all(10.0),
+                                 child: Image.asset(item["image"]!),
+                               ),
+                           ),
+                                   Text(
+                                     item["name"]!,
+                                     style: TextStyle(color: Color(0xFF4E5D3B)),
+                                   ),
+
+                           ],
+                         ),
                        );
                      },
                    ),

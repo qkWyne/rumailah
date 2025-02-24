@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/home.dart';
-import 'package:rumailah/screens/select_order_menu.dart';
 
-class SelectStoreLocation extends StatefulWidget {
-  const SelectStoreLocation({super.key});
+class SelectLocator extends StatefulWidget {
+  const SelectLocator({super.key});
 
   @override
-  State<SelectStoreLocation> createState() => _SelectStoreLocationState();
+  State<SelectLocator> createState() => _SelectLocatorState();
 }
 
-class _SelectStoreLocationState extends State<SelectStoreLocation> {
+class _SelectLocatorState extends State<SelectLocator> {
   int? selectedIndex;
   final List<Map<String, dynamic>> stores = [
     {
@@ -21,7 +20,7 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
       "name": "Rumailah Café - Jumeirah",
       "distance": "4 km",
       "address":
-          "809 Jumeirah St - Umm Suqeim-Umm Suqeim 3\nDubai - United Arab Emirates",
+      "809 Jumeirah St - Umm Suqeim-Umm Suqeim 3\nDubai - United Arab Emirates",
     },
     {
       "name": "Rumailah Café - Dibba",
@@ -36,10 +35,6 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(
-            "Location",
-            style: TextStyle(color: Color(0xFF6E7075)),
-          ),
         ),
         body: Center(
           child: Container(
@@ -57,7 +52,14 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                   child: Column(
                     children: [
                       Text(
-                        "Select Store",
+                        "Hello,",
+                        style: TextStyle(
+                          color: Color(0xFF4D5E47),
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        "Select Locator",
                         style: TextStyle(
                           color: Color(0xFF4D5E47),
                           fontSize: 30,
@@ -65,10 +67,10 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 8,
                       ),
                       Text(
-                        "Please tell us your Favorite Shop",
+                        "Please tell us your Favorite Location",
                         style: TextStyle(
                           color: Color(0xFF65656F),
                           fontSize: 18,
@@ -87,7 +89,7 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                               hintText: "Search Store",
                               hintStyle: TextStyle(color: Color(0xFF65656F)),
                               prefixIcon:
-                                  Icon(Icons.search, color: Color(0xFF65656F)),
+                              Icon(Icons.search, color: Color(0xFF65656F)),
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
@@ -124,9 +126,9 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                             onTap: () {
                               setState(() {
                                 selectedIndex = index;
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SelectOrderMenu()));
-                              });
 
+                              });
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
                             },
                             child: Container(
                               width: 300,
@@ -160,7 +162,7 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "${stores[index]["name"]}",

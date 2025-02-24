@@ -1,5 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/order_placed%20_successfully.dart';
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
 
@@ -122,6 +123,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         backgroundColor:Color(0xFF4D5E47),
                         foregroundColor: Colors.white),
                     onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPlacedSuccessfully()));
                     }, child: Text("Order Now",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
               ),
 

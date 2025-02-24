@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/select_locator.dart';
+import 'package:rumailah/screens/select_store_location.dart';
 class AllowLocation extends StatefulWidget {
   const AllowLocation({super.key});
 
@@ -54,6 +56,7 @@ class _AllowLocationState extends State<AllowLocation> {
                                    backgroundColor:Color(0xFF4D5E47),
                                    foregroundColor: Colors.white),
                                onPressed: (){
+                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> SelectLocator()));
                                }, child: Text("Allow",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                          ),
                          SizedBox(height: 10,),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/checkout.dart';
 class DetailPage extends StatefulWidget {
   final Map<String, dynamic> item;
 
@@ -30,7 +31,7 @@ class _DetailPageState extends State<DetailPage> {
             Container(
               height: 300,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
                 image:DecorationImage(image: AssetImage(widget.item["image1"]),fit: BoxFit.cover,)
               ),
             ),
@@ -98,6 +99,7 @@ class _DetailPageState extends State<DetailPage> {
                                     backgroundColor:Color(0xFF4D5E47),
                                     foregroundColor: Colors.white),
                                 onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutScreen()));
                                 }, child: Text("Add Cart",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                           ),
                         ],

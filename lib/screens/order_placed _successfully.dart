@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/my_orders.dart';
 class OrderPlacedSuccessfully extends StatefulWidget {
   const OrderPlacedSuccessfully({super.key});
 
@@ -60,7 +61,7 @@ class _OrderPlacedSuccessfullyState extends State<OrderPlacedSuccessfully> {
                         }, child: Text("Continue",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                   ),
                   TextButton(onPressed: () {
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrders()));
                   }, child: Text("Go to My Order",style: TextStyle(color: Color(0xFF858886),fontSize: 16),))
                 ],
               ),

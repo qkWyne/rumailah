@@ -154,7 +154,8 @@ class _LoginOtpState extends State<LoginOtp> {
                                         (FirebaseAuthException e) {},
                                     codeSent: (String verificationId,
                                         int? resentToken) {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => OtpVerify(verificationId: verificationId,)));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> CreateAccount()));
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => OtpVerify(verificationId: verificationId,)));
                                     },
                                     codeAutoRetrievalTimeout:
                                         (String verificationId) {},
@@ -184,7 +185,7 @@ class _LoginOtpState extends State<LoginOtp> {
                           ),
                           InkWell(
                               onTap: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CreateAccount()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccount()));
                               },
                               child: Text(
                                 "Create",

@@ -1,5 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/payment_page.dart';
 
 class CheckoutScreen extends StatefulWidget {
   @override
@@ -31,6 +32,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       total += price * quantity;
     });
     return total;
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    calculateTotal();
   }
 
   final List<Map<String, dynamic>> orderMenu = [
@@ -284,6 +291,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         backgroundColor:Color(0xFF4D5E47),
                         foregroundColor: Colors.white),
                     onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> PaymentPage()));
                     }, child: Text("Order",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
               ),
             ],
