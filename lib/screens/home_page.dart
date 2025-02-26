@@ -1,8 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/home.dart';
+import 'package:rumailah/screens/order_view.dart';
+import 'package:rumailah/screens/select_locator.dart';
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key,});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -59,40 +63,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Color(0xFFF7F6F6),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Row(
-          children: [
-            CircleAvatar(
-              child: Image.asset("assets/images/homepage/profile.png")
-            ),
-            SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Hi User Welcome to",
-                  style: TextStyle(color: Color(0xFF6F726C), fontSize: 12),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Rumailah Café - Corniche",
-                      style: TextStyle(
-                        color: Color(0xFF6F726C),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Icon(Icons.arrow_drop_down, color: Colors.black),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
       body: ListView(
         padding: EdgeInsets.all(12),
         children: [
@@ -169,17 +139,33 @@ class _HomePageState extends State<HomePage> {
           ),
 
           SizedBox(height: 16),
-
-          SectionHeader(title: "Popular Products"),
+          SectionHeader(title: "Popular Products",navigate: OrderView(),),
           SizedBox(height: 8),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: products.map((product) {
-                return ProductCard(
-                  image: product["image"]!,
-                  name: product["name"]!,
-                  price: product["price"]!,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderView()));
+                  },
+                  child: Container(
+                    width: 160,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child:Image.asset(product["image"].toString(), height: 100, width: 160, fit: BoxFit.cover),
+                        ),
+                        SizedBox(height: 6),
+                        Text(product["name"].toString(), style: TextStyle(color: Color(0xFF263860),fontSize: 14, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 2),
+                        Text(product["price"].toString(), style: TextStyle(color: Color(0xFF263860), fontSize: 14)),
+                      ],
+                    ),
+                  ),
                 );
               }).toList(),
             ),
@@ -187,17 +173,39 @@ class _HomePageState extends State<HomePage> {
 
           SizedBox(height: 16),
 
-          SectionHeader(title: "Popular Stores"),
+          SectionHeader(title: "Popular Stores",navigate: SelectLocator(),),
           SizedBox(height: 8),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: stores.map((stores) {
-                return StoreCard(
-                  image: stores["image"]!,
-                  name: stores["name"]!,
-                  icon: stores["icon"]!,
-                  location: stores["location"]!,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>SelectLocator()));
+                  },
+                  child: Container(
+                      width: 250,
+                      margin: EdgeInsets.only(right: 10,bottom: 130),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(stores["image"].toString(),height: 120,width: 250,fit: BoxFit.cover),
+                          ),
+                          SizedBox(height: 6),
+                          Text(stores["name"].toString(), style: TextStyle(color: Color(0xFF26375F),fontSize: 18, fontWeight: FontWeight.bold)),
+                          SizedBox(height: 2),
+                          Row(
+                            children: [
+                              Image.asset(stores["icon"].toString(),fit: BoxFit.cover),
+                              SizedBox(width: 3,),
+                              Text(stores["location"].toString(), style: TextStyle(color: Color(0xFF53565A), fontSize: 12)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                 );
               }).toList(),
             ),
@@ -211,78 +219,24 @@ class _HomePageState extends State<HomePage> {
 
 class SectionHeader extends StatelessWidget {
   final String title;
+  final Widget navigate;
 
-  SectionHeader({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Color(0xFF505155))),
-        Row(
-          children: [
-            Text("View All", style: TextStyle(color: Color(0xFF263860), fontSize: 14,fontWeight: FontWeight.bold)),
-            Icon(Icons.keyboard_arrow_right,color:Color(0xFF263860) ,),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  final String image, name, price;
-
-  ProductCard({required this.image, required this.name, required this.price});
+  SectionHeader({required this.title,required this.navigate });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 160,
-      margin: EdgeInsets.only(right: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => navigate));
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child:Image.asset(image, height: 100, width: 160, fit: BoxFit.cover),
-          ),
-          SizedBox(height: 6),
-          Text(name, style: TextStyle(color: Color(0xFF263860),fontSize: 14, fontWeight: FontWeight.bold)),
-          SizedBox(height: 2),
-          Text(price, style: TextStyle(color: Color(0xFF263860), fontSize: 14)),
-        ],
-      ),
-    );
-  }
-}
-
-class StoreCard extends StatelessWidget {
-  final String image, name, icon,location;
-
-  StoreCard({required this.image, required this.name, required this.icon, required this.location});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      margin: EdgeInsets.only(right: 10,bottom: 130),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.asset(image,height: 120,width: 250,fit: BoxFit.cover),
-          ),
-          SizedBox(height: 6),
-          Text(name, style: TextStyle(color: Color(0xFF26375F),fontSize: 18, fontWeight: FontWeight.bold)),
-          SizedBox(height: 2),
+          Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Color(0xFF505155))),
           Row(
             children: [
-              Image.asset(icon,fit: BoxFit.cover),
-              SizedBox(width: 3,),
-              Text(location, style: TextStyle(color: Color(0xFF53565A), fontSize: 12)),
+              Text("View All", style: TextStyle(color: Color(0xFF263860), fontSize: 14,fontWeight: FontWeight.bold)),
+              Icon(Icons.keyboard_arrow_right,color:Color(0xFF263860) ,),
             ],
           ),
         ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/order_view.dart';
 class SelectOrderMenu extends StatefulWidget {
-  const SelectOrderMenu({super.key});
+  final String storeName;
+  const SelectOrderMenu({super.key,required this.storeName});
 
   @override
   State<SelectOrderMenu> createState() => _SelectOrderMenuState();
@@ -44,7 +45,7 @@ class _SelectOrderMenuState extends State<SelectOrderMenu> {
             Row(
               children: [
                 Text(
-                  "Rumailah Café - Corniche",
+                  widget.storeName,
                   style: TextStyle(
                     color: Color(0xFF6F726C),
                     fontSize: 16,

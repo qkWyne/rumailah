@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:rumailah/screens/account_menu.dart';
 import 'package:rumailah/screens/home_page.dart';
 import 'package:rumailah/screens/scan_qr_code.dart';
+import 'package:rumailah/screens/select_locator.dart';
+import 'package:rumailah/screens/select_order_menu.dart';
 import 'package:rumailah/screens/select_store_location.dart';
 class Home extends StatefulWidget {
-  const Home({super.key});
+   final String storeAddress ;
+  const Home({super.key,required this.storeAddress});
 
   @override
   State<Home> createState() => _HomeState();
@@ -14,11 +17,11 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   // Screens List
-  final List<Widget> _screens = [
+  List<Widget> get _screens => [
     HomePage(),
     ScanQrCode(),
     SelectStoreLocation(),
-    AccountPage(),
+    AccountPage(storeName: widget.storeAddress),
   ];
 
   // Handle Bottom Nav Bar item tap
@@ -30,6 +33,45 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _selectedIndex == 0 ?AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SelectLocator()));
+          },
+          child: Row(
+            children: [
+              CircleAvatar(
+                  child: Image.asset("assets/images/homepage/profile.png")
+              ),
+              SizedBox(width: 8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Hi User Welcome to",
+                    style: TextStyle(color: Color(0xFF6F726C), fontSize: 12),
+                  ),
+                 Row(
+                      children: [
+                        Text(
+                          widget.storeAddress,
+                          style: TextStyle(
+                            color: Color(0xFF6F726C),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Icon(Icons.arrow_drop_down, color: Colors.black),
+                      ],
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ): null,
       extendBody: true,
       body: _screens[_selectedIndex],
       bottomNavigationBar: ClipPath(
@@ -87,7 +129,9 @@ class _HomeState extends State<Home> {
         child: FloatingActionButton(
           backgroundColor: Color(0xFF4D5E47),
           shape: CircleBorder(),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectOrderMenu(storeName: widget.storeAddress)));
+          },
           child: Image.asset("assets/images/homepage/cup.png"),
         ),
       ),

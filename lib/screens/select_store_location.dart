@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/home.dart';
 import 'package:rumailah/screens/select_order_menu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectStoreLocation extends StatefulWidget {
   const SelectStoreLocation({super.key});
@@ -29,6 +30,25 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
       "address": "Sambaraid -\nFujairah - United Arab Emirates",
     },
   ];
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedStore();
+  }
+
+  _loadSelectedStore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedIndex = prefs.getInt("selected_store");
+    });
+  }
+  _saveSelectedStore(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("selected_store", index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -120,12 +140,14 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                         itemCount: stores.length,
                         itemBuilder: (context, index) {
                           final store = stores[index];
+                          final storeName =store["name"];
                           return GestureDetector(
                             onTap: () {
                               setState(() {
                                 selectedIndex = index;
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SelectOrderMenu()));
                               });
+                              _saveSelectedStore(index);
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectOrderMenu(storeName: storeName,)));
 
                             },
                             child: Container(
@@ -154,6 +176,8 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                                       setState(() {
                                         selectedIndex = value;
                                       });
+                                      _saveSelectedStore(index);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectOrderMenu(storeName: storeName,)));
                                     },
                                   ),
                                   SizedBox(width: 12),

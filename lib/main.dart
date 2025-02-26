@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/about_us.dart';
@@ -16,6 +17,7 @@ import 'package:rumailah/screens/order_view.dart';
 import 'package:rumailah/screens/otp_verify.dart';
 import 'package:rumailah/screens/payment_page.dart';
 import 'package:rumailah/screens/select_language.dart';
+import 'package:rumailah/screens/select_locator.dart';
 import 'package:rumailah/screens/select_order_menu.dart';
 import 'package:rumailah/screens/select_store_location.dart';
 import 'package:rumailah/screens/splash_screen.dart';
@@ -26,12 +28,23 @@ void main() async{
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  User? user;
+  @override
+  void initState(){
+    super.initState();
+    user=FirebaseAuth.instance.currentUser;
+  }
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -39,7 +52,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home:SplashScreen(),
+      home:user != null ? SelectLocator() : SplashScreen(),
     );
   }
 }

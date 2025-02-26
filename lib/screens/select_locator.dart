@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectLocator extends StatefulWidget {
   const SelectLocator({super.key});
@@ -9,6 +10,7 @@ class SelectLocator extends StatefulWidget {
 }
 
 class _SelectLocatorState extends State<SelectLocator> {
+
   int? selectedIndex;
   final List<Map<String, dynamic>> stores = [
     {
@@ -28,6 +30,25 @@ class _SelectLocatorState extends State<SelectLocator> {
       "address": "Sambaraid -\nFujairah - United Arab Emirates",
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedStore();
+  }
+
+  _loadSelectedStore() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedIndex = prefs.getInt("selected_store");
+    });
+  }
+
+  _saveSelectedStore(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("selected_store", index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -122,13 +143,14 @@ class _SelectLocatorState extends State<SelectLocator> {
                         itemCount: stores.length,
                         itemBuilder: (context, index) {
                           final store = stores[index];
+                          final storeAddress = store["name"];
                           return GestureDetector(
                             onTap: () {
                               setState(() {
                                 selectedIndex = index;
-
                               });
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
+                              _saveSelectedStore(index);
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home(storeAddress: storeAddress,)));
                             },
                             child: Container(
                               width: 300,
@@ -156,6 +178,8 @@ class _SelectLocatorState extends State<SelectLocator> {
                                       setState(() {
                                         selectedIndex = value;
                                       });
+                                      _saveSelectedStore(index);
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home(storeAddress: storeAddress,)));
                                     },
                                   ),
                                   SizedBox(width: 12),

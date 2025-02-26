@@ -1,18 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/about_us.dart';
 import 'package:rumailah/screens/edit_account.dart';
 import 'package:rumailah/screens/favorites_page.dart';
 import 'package:rumailah/screens/home.dart';
+import 'package:rumailah/screens/login_otp.dart';
+import 'package:rumailah/screens/logout.dart';
 import 'package:rumailah/screens/my_orders.dart';
 import 'package:rumailah/screens/order_view.dart';
 import 'package:rumailah/screens/privacy_policy.dart';
+import 'package:rumailah/screens/reward_point.dart';
 import 'package:rumailah/screens/scan_qr_code.dart';
 import 'package:rumailah/screens/select_order_menu.dart';
 import 'package:rumailah/screens/select_store_location.dart';
 import 'package:rumailah/screens/term_conditions.dart';
+import 'package:rumailah/screens/select_locator.dart';
 
 class AccountPage extends StatefulWidget {
-  const AccountPage({super.key});
+  final storeName ;
+  const AccountPage({super.key,required this.storeName});
 
   @override
   State<AccountPage> createState() => _AccountPageState();
@@ -20,6 +26,15 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   bool isDarkMode = false;
+
+  _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginOtp()));
+    } on FirebaseAuthException catch (e) {
+      print("Error $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +44,6 @@ class _AccountPageState extends State<AccountPage> {
         backgroundColor: Colors.white,
         title: Text("Account", style: TextStyle(color: Color(0xFF6E7075))),
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color(0xFF6E7075)),
-          onPressed: () {},
-        ),
         actions: [
           Row(
             children: [
@@ -55,11 +66,8 @@ class _AccountPageState extends State<AccountPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              color: Colors.white,
               padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -107,8 +115,8 @@ class _AccountPageState extends State<AccountPage> {
                 margin: EdgeInsets.only(bottom: 60),
                 child: ListView(
                   children: [
-                    menuItem("Home","assets/images/accountmenu/home.png",Home()),
-                    menuItem("Reward Points", "assets/images/accountmenu/RewardPoints.png",SelectOrderMenu()),
+                    menuItem("Home","assets/images/accountmenu/home.png",Home(storeAddress: widget.storeName,)),
+                    menuItem("Reward Points", "assets/images/accountmenu/RewardPoints.png",RewardPointsScreen()),
                     menuItem("Scan", "assets/images/accountmenu/Scan.png",ScanQrCode()),
                     menuItem("My Orders", "assets/images/accountmenu/order.png",MyOrders()),
                     menuItem("Location", "assets/images/accountmenu/Location.png",SelectStoreLocation()),
@@ -116,7 +124,7 @@ class _AccountPageState extends State<AccountPage> {
                     menuItem("About Us", "assets/images/accountmenu/about_us.png",AboutUs()),
                     menuItem("Privacy and Policy", "assets/images/accountmenu/Privacy_policy.png",PrivacyPolicy()),
                     menuItem("Terms & Conditions", "assets/images/accountmenu/terms_conditions.png",TermConditions()),
-                    menuItem("Logout", "assets/images/accountmenu/logout.png", Home(),isLast: true),
+                    menuItem("Logout", "assets/images/accountmenu/logout.png", Logout(),isLast: true),
                   ],
                 ),
               ),

@@ -69,10 +69,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {},
-          ),
           title: Text("Checkout", style: TextStyle(color: Color(0xFF6E7075))),
           centerTitle: false,
         ),

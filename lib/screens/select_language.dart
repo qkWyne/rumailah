@@ -8,6 +8,7 @@ class SelectLanguage extends StatefulWidget {
 }
 
 class _SelectLanguageState extends State<SelectLanguage> {
+  String selectedLanguage = "English";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,49 +38,106 @@ class _SelectLanguageState extends State<SelectLanguage> {
                         fontSize: 18,color: Color(0xFF4D5E47)),),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        width: 320,
-                        height: 65,
-                        decoration:BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Color(0xFF4D5E47),)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Color(0xFFDFEEDA),
-                                child: const Text('E',style: TextStyle(color:  Color(0xFF4D5E47),
-                                fontWeight: FontWeight.bold,fontSize: 18),),
-                              ),
-                              SizedBox(width: 10,),
-                              Text("English",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
-                            ],
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedLanguage = "English";
+                          });
+                        },
+                        child: selectedLanguage == "English" ? Container(
+                          width: 320,
+                          height: 65,
+                          decoration:BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Color(0xFF4D5E47),)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Color(0xFFDFEEDA),
+                                  child: const Text('E',style: TextStyle(color:  Color(0xFF4D5E47),
+                                  fontWeight: FontWeight.bold,fontSize: 18),),
+                                ),
+                                SizedBox(width: 10,),
+                                Text("English",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
+                              ],
+                            ),
+                          ),
+                        ) : Container(
+                          width: 320,
+                          height: 65,
+                          decoration:BoxDecoration(
+                            color: Color(0xFFDFEEDA),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Color(0xFF4D5E47),
+                                  child: const Text('E',style: TextStyle(color:  Color(0xFFDFEEDA),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),),
+                                ),
+                                SizedBox(width: 10,),
+                                Text("English",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(height: 20,),
-                      Container(
-                        width: 320,
-                        height: 65,
-                        decoration:BoxDecoration(
-                          color: Color(0xFFDFEEDA),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Color(0xFF4D5E47),
-                                child: const Text('AE',style: TextStyle(color:  Color(0xFFDFEEDA),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),),
-                              ),
-                              SizedBox(width: 10,),
-                              Text("اَلْعَرَبِيَّةُ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
-                            ],
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedLanguage = "Arabic";
+                          });
+                        },
+                        child: selectedLanguage == "Arabic" ? Container(
+                          width: 320,
+                          height: 65,
+                          decoration:BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Color(0xFF4D5E47),)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Color(0xFFDFEEDA),
+                                  child: const Text('AE',style: TextStyle(color:  Color(0xFF4D5E47),
+                                      fontWeight: FontWeight.bold,fontSize: 18),),
+                                ),
+                                SizedBox(width: 10,),
+                                Text("اَلْعَرَبِيَّة",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
+                              ],
+                            ),
+                          ),
+                        ): Container(
+                          width: 320,
+                          height: 65,
+                          decoration:BoxDecoration(
+                            color: Color(0xFFDFEEDA),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Color(0xFF4D5E47),
+                                  child: const Text('AE',style: TextStyle(color:  Color(0xFFDFEEDA),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),),
+                                ),
+                                SizedBox(width: 10,),
+                                Text("اَلْعَرَبِيَّةُ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:  Color(0xFF4D5E47),),),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -97,7 +155,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                                 backgroundColor:Color(0xFF4D5E47),
                                 foregroundColor: Colors.white),
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginOtp()));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginOtp()));
                             }, child: Text("Okay",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                       ),
 

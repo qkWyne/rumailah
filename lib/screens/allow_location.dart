@@ -56,12 +56,12 @@ class _AllowLocationState extends State<AllowLocation> {
                                    backgroundColor:Color(0xFF4D5E47),
                                    foregroundColor: Colors.white),
                                onPressed: (){
-                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> SelectLocator()));
+                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SelectLocator()));
                                }, child: Text("Allow",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                          ),
                          SizedBox(height: 10,),
                          TextButton(onPressed: (){
-                           
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=> SelectLocator()));
                          }, child: Text("Skip",style: TextStyle(color: Color(0xFF7C7C83),fontSize: 16),))
                        ],
                      ),
