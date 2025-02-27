@@ -24,8 +24,8 @@ class _EditAccountState extends State<EditAccount> {
       await FirebaseFirestore.instance.collection("users").doc(uid).update({
         "userID":uid,
         "userLast_Update":DateTime.now(),
-        "userName":_firstnameController.text,
-        "userName":_lastnameController.text,
+        "firstName":_firstnameController.text,
+        "lastName":_lastnameController.text,
         "userPhoneNo":_phoneNoController.text,
         "userGender":selectedGender,
         "userDOB":_datePickerController.text,
@@ -106,6 +106,7 @@ class _EditAccountState extends State<EditAccount> {
                         Container(
                           width: 310,
                           child: TextFormField(
+                            textCapitalization: TextCapitalization.sentences,
                             controller: _firstnameController,
                             decoration: InputDecoration(
                                 hintText: "Enter First Name",
@@ -154,6 +155,7 @@ class _EditAccountState extends State<EditAccount> {
                         Container(
                           width: 310,
                           child: TextFormField(
+                            textCapitalization: TextCapitalization.sentences,
                             controller: _lastnameController,
                             decoration: InputDecoration(
                                 hintText: "Enter Last Name",
@@ -276,8 +278,8 @@ class _EditAccountState extends State<EditAccount> {
 
                               ),
                               validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Required";
+                                if (value == null || value.isEmpty) {
+                                  return "Please select a gender";
                                 }
                                 return null;
                               },
@@ -306,8 +308,8 @@ class _EditAccountState extends State<EditAccount> {
                         Container(
                           width: 310,
                           child:  TextFormField(
+                            canRequestFocus: false,
                             keyboardType: TextInputType.none,
-
                             controller: _datePickerController,
                             decoration: InputDecoration(
                               prefixIcon: Image.asset("assets/images/createaccount/dob.png",),

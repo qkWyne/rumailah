@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/checkout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class DetailPage extends StatefulWidget {
   final Map<String, dynamic> item;
 
@@ -10,6 +13,81 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  List<Map<String, dynamic>> favoriteList= [];
+  bool isFavorite = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfFavorite();
+  }
+
+
+  void checkIfFavorite() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedList = prefs.getString("keyList");
+
+    if (storedList != null) {
+      List<dynamic> decodedList = jsonDecode(storedList);
+      List<Map<String, dynamic>> favoriteList =
+      decodedList.map((item) => Map<String, dynamic>.from(item)).toList();
+
+
+      bool alreadyFavorite =
+      favoriteList.any((element) => element["name"] == widget.item["name"]);
+
+      setState(() {
+        isFavorite = alreadyFavorite;
+      });
+    }
+  }
+
+
+  void setFavorite() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedList = prefs.getString("keyList");
+    List<Map<String, dynamic>> favoriteList = [];
+
+    if (storedList != null) {
+      List<dynamic> decodedList = jsonDecode(storedList);
+      favoriteList =
+          decodedList.map((item) => Map<String, dynamic>.from(item)).toList();
+    }
+
+    if (!isFavorite) {
+      Map<String, dynamic> favorite = {
+        "name": widget.item["name"],
+        "details": widget.item["details"],
+        "price": widget.item["price"],
+        "image": widget.item["image"],
+      };
+
+      favoriteList.add(favorite);
+      await prefs.setString("keyList", jsonEncode(favoriteList));
+
+      setState(() {
+        isFavorite = true;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(duration: Duration(seconds: 2),content: Text("${widget.item["name"]} added to favorites!")),
+      );
+    } else {
+      favoriteList.removeWhere((element) => element["name"] == widget.item["name"]);
+      await prefs.setString("keyList", jsonEncode(favoriteList));
+
+      setState(() {
+        isFavorite = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(duration: Duration(seconds: 2),content: Text("${widget.item["name"]} removed from favorites!")),
+      );
+    }
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +98,9 @@ class _DetailPageState extends State<DetailPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Image.asset("assets/images/orderview/path1.png"),
+            child: IconButton(onPressed: (){
+              setFavorite();
+            }, icon: Icon( Icons.favorite,color:  isFavorite ? Colors.red : Colors.white, size: 40,)),
           ),
         ],
         backgroundColor: Colors.transparent,

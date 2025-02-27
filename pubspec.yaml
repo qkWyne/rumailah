@@ -46,6 +46,7 @@ dependencies:
   email_auth: ^2.0.0
   date_field: ^6.0.0
   shared_preferences: ^2.5.2
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

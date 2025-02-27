@@ -139,7 +139,23 @@ class _HomePageState extends State<HomePage> {
           ),
 
           SizedBox(height: 16),
-          SectionHeader(title: "Popular Products",navigate: OrderView(),),
+    GestureDetector(
+    onTap: () {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderView()));
+    },
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+    Text("Popular Products", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Color(0xFF505155))),
+    Row(
+    children: [
+    Text("View All", style: TextStyle(color: Color(0xFF263860), fontSize: 14,fontWeight: FontWeight.bold)),
+    Icon(Icons.keyboard_arrow_right,color:Color(0xFF263860) ,),
+    ],
+    ),
+    ],
+    ),
+    ),
           SizedBox(height: 8),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -173,7 +189,23 @@ class _HomePageState extends State<HomePage> {
 
           SizedBox(height: 16),
 
-          SectionHeader(title: "Popular Stores",navigate: SelectLocator(),),
+          GestureDetector(
+          onTap: () {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SelectLocator()));
+    },
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+    Text("Popular Stores", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Color(0xFF505155))),
+    Row(
+    children: [
+    Text("View All", style: TextStyle(color: Color(0xFF263860), fontSize: 14,fontWeight: FontWeight.bold)),
+    Icon(Icons.keyboard_arrow_right,color:Color(0xFF263860) ,),
+    ],
+    ),
+    ],
+    ),
+    ),
           SizedBox(height: 8),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -181,7 +213,7 @@ class _HomePageState extends State<HomePage> {
               children: stores.map((stores) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>SelectLocator()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>SelectLocator()));
                   },
                   child: Container(
                       width: 250,
@@ -209,35 +241,6 @@ class _HomePageState extends State<HomePage> {
                 );
               }).toList(),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-class SectionHeader extends StatelessWidget {
-  final String title;
-  final Widget navigate;
-
-  SectionHeader({required this.title,required this.navigate });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => navigate));
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Color(0xFF505155))),
-          Row(
-            children: [
-              Text("View All", style: TextStyle(color: Color(0xFF263860), fontSize: 14,fontWeight: FontWeight.bold)),
-              Icon(Icons.keyboard_arrow_right,color:Color(0xFF263860) ,),
-            ],
           ),
         ],
       ),

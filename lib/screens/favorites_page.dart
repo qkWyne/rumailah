@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
 
@@ -7,32 +10,60 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  final List<Map<String, dynamic>> favorites = [
-    {
-      "image": "assets/images/orderview/sandwich.png",
-      "name": "Smoked Turkey",
-      "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
-      "price": "AED 25",
-    },
-    {
-      "image": "assets/images/orderview/burger1.png",
-      "name": "Four Cheese and Roas",
-      "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
-      "price": "AED 25",
-    },
-    {
-      "image": "assets/images/orderview/sandwich.png",
-      "name": "Spicy Chicken Srirac...",
-      "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
-      "price": "AED 25",
-    },
-    {
-      "image": "assets/images/orderview/burger.png",
-      "name": "Smoked Turkey",
-      "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
-      "price": "AED 25",
-    },
-  ];
+  List<Map<String, dynamic>> favoriteList = [];
+
+  void getFavorate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? myList = prefs.getString("keyList");
+
+    if (myList != null && myList.isNotEmpty) {
+      List<dynamic> decodedList = jsonDecode(myList);
+      setState(() {
+        favoriteList = decodedList.map((item) => Map<String, dynamic>.from(item)).toList();
+      });
+    } else {
+      setState(() {
+        favoriteList = [];
+      });
+    }
+
+    print("Fetched Favorites List: $favoriteList");
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    getFavorate();
+  }
+
+
+  // final List<Map<String, dynamic>> favorites = [
+  //   {
+  //     "image": "assets/images/orderview/sandwich.png",
+  //     "name": "Smoked Turkey",
+  //     "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
+  //     "price": "AED 25",
+  //   },
+  //   {
+  //     "image": "assets/images/orderview/burger1.png",
+  //     "name": "Four Cheese and Roas",
+  //     "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
+  //     "price": "AED 25",
+  //   },
+  //   {
+  //     "image": "assets/images/orderview/sandwich.png",
+  //     "name": "Spicy Chicken Srirac...",
+  //     "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
+  //     "price": "AED 25",
+  //   },
+  //   {
+  //     "image": "assets/images/orderview/burger.png",
+  //     "name": "Smoked Turkey",
+  //     "details": "Smoked Tukey, and 3 cheese\nFilling Mix, in a soft Panini bread.",
+  //     "price": "AED 25",
+  //   },
+  // ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +75,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
       body:  Padding(
         padding: EdgeInsets.all(16),
         child: ListView.builder(
-          itemCount: favorites.length,
+          itemCount: favoriteList.length,
           itemBuilder: (context, index) {
-            final store = favorites[index];
+            final store = favoriteList[index];
             return Container(
                 width: 300,
                 height: 150,
@@ -70,7 +101,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${favorites[index]["name"]}",
+                          "${favoriteList[index]["name"]}",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -80,14 +111,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          "${favorites[index]["details"]}",
+                          "${favoriteList[index]["details"]}",
                           style: TextStyle(
                               color: Color(0xFF60605F),
                               fontSize: 10),
                         ),
                         SizedBox(height: 8),
                         Text(
-                          favorites[index]["price"].toString(),
+                          favoriteList[index]["price"].toString(),
                           style: TextStyle(
                               color: Color(0xFF263860), fontSize: 17,
                               fontWeight: FontWeight.bold),
@@ -107,7 +138,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           child: Container(
                               width: 110,
                               height:110,
-                              child: Image.asset(favorites[index]["image"])),
+                              child: Image.asset(favoriteList[index]["image"])),
                         ),
                       ],
                     ),

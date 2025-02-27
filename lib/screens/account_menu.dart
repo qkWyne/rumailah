@@ -30,7 +30,8 @@ class _AccountPageState extends State<AccountPage> {
   _signOut() async {
     try {
       await FirebaseAuth.instance.signOut();
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginOtp()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginOtp()));
     } on FirebaseAuthException catch (e) {
       print("Error $e");
     }
@@ -47,8 +48,9 @@ class _AccountPageState extends State<AccountPage> {
         actions: [
           Row(
             children: [
-              Text("Dark Mode", style: TextStyle(color: Color(0xFF6E7075), fontSize: 14,
-              fontWeight: FontWeight.bold)),
+              Text("Dark Mode",
+                  style: TextStyle(color: Color(0xFF6E7075), fontSize: 14,
+                      fontWeight: FontWeight.bold)),
               Switch(
                 value: isDarkMode,
                 onChanged: (value) {
@@ -62,95 +64,277 @@ class _AccountPageState extends State<AccountPage> {
           ),
         ],
       ),
-      body:Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage("assets/images/accountmenu/person.jpg"),
-                  ),
-                  SizedBox(width: 12),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(12),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage(
+                      "assets/images/accountmenu/person.jpg"),
+                ),
+                SizedBox(width: 12),
 
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("User Name", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 4),
-                        Text("+971 1234567890", style: TextStyle(color: Color(0xFF9AA39C),fontSize: 16)),
-                      ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("User Name", style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 4),
+                      Text("+971 1234567890", style: TextStyle(
+                          color: Color(0xFF9AA39C), fontSize: 16)),
+                    ],
+                  ),
+                ),
+                InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => EditAccount()));
+                    },
+                    child: Image.asset(
+                      "assets/images/accountmenu/edit.png", scale: 1.1,))
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+
+          Container(
+            padding: EdgeInsets.all(14),
+            color: Colors.white,
+            child: Row(
+              children: [
+                Image.asset(
+                  "assets/images/accountmenu/raffle.png", scale: 1.2,),
+                SizedBox(width: 10),
+                Expanded(child: Text(
+                    "Raffle Dashboard", style: TextStyle(fontSize: 16))),
+                Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(bottom: 60),
+              child: ListView(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) =>
+                          Home(storeAddress: widget.storeName,)));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/accountmenu/home.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text(
+                              "Home", style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
                     ),
                   ),
-                  InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccount()));
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => RewardPointsScreen()));
                     },
-                      child: Image.asset("assets/images/accountmenu/edit.png",scale: 1.1,))
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                              "assets/images/accountmenu/RewardPoints.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text(
+                              "Reward Points", style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => ScanQrCode()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/accountmenu/Scan.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text(
+                              "Scan", style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MyOrders()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/accountmenu/order.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text(
+                              "My Orders", style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => SelectStoreLocation()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/accountmenu/Location.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text(
+                              "Location", style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => FavoritesPage()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                              "assets/images/accountmenu/favorites.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text(
+                              "Favorites", style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AboutUs()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/accountmenu/about_us.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text(
+                              "About Us", style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => PrivacyPolicy()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                              "assets/images/accountmenu/Privacy_policy.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text("Privacy and Policy",
+                              style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => TermConditions()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                              "assets/images/accountmenu/terms_conditions.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text("Terms & Conditions",
+                              style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Logout()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          Image.asset("assets/images/accountmenu/logout.png"),
+                          SizedBox(width: 12),
+                          Expanded(child: Text(
+                              "Logout", style: TextStyle(fontSize: 16))),
+                          Icon(Icons.arrow_forward_ios, size: 18, color: Colors
+                              .grey),
+                        ],
+                      ),
+                    ),
+                  ),
+
                 ],
               ),
             ),
-            SizedBox(height: 16),
-
-            Container(
-              padding: EdgeInsets.all(14),
-              color: Colors.white,
-              child: Row(
-                children: [
-                  Image.asset("assets/images/accountmenu/raffle.png",scale: 1.2,),
-                  SizedBox(width: 10),
-                  Expanded(child: Text("Raffle Dashboard", style: TextStyle(fontSize: 16))),
-                  Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
-                ],
-              ),
-            ),
-            SizedBox(height: 16),
-
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(bottom: 60),
-                child: ListView(
-                  children: [
-                    menuItem("Home","assets/images/accountmenu/home.png",Home(storeAddress: widget.storeName,)),
-                    menuItem("Reward Points", "assets/images/accountmenu/RewardPoints.png",RewardPointsScreen()),
-                    menuItem("Scan", "assets/images/accountmenu/Scan.png",ScanQrCode()),
-                    menuItem("My Orders", "assets/images/accountmenu/order.png",MyOrders()),
-                    menuItem("Location", "assets/images/accountmenu/Location.png",SelectStoreLocation()),
-                    menuItem("Favorites", "assets/images/accountmenu/favorites.png",FavoritesPage()),
-                    menuItem("About Us", "assets/images/accountmenu/about_us.png",AboutUs()),
-                    menuItem("Privacy and Policy", "assets/images/accountmenu/Privacy_policy.png",PrivacyPolicy()),
-                    menuItem("Terms & Conditions", "assets/images/accountmenu/terms_conditions.png",TermConditions()),
-                    menuItem("Logout", "assets/images/accountmenu/logout.png", Logout(),isLast: true),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-    );
-  }
-
-
-  Widget menuItem(String title, String image , Widget navigate, {bool isLast = false}) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => navigate));
-      },
-      child: Container(
-        padding: EdgeInsets.all(20),
-        color: Colors.white,
-        child: Row(
-          children: [
-            Image.asset(image),
-            SizedBox(width: 12),
-            Expanded(child: Text(title, style: TextStyle(fontSize: 16))),
-            Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -22,7 +22,6 @@ class RewardPointsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Reward Points"),
-        leading: Icon(Icons.arrow_back),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,

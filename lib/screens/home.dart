@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
         elevation: 0,
         title: GestureDetector(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SelectLocator()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SelectLocator()));
           },
           child: Row(
             children: [

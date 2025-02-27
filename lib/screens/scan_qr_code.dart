@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 class ScanQrCode extends StatefulWidget {
   const ScanQrCode({super.key});
 
@@ -8,6 +9,7 @@ class ScanQrCode extends StatefulWidget {
 }
 
 class _ScanQrCodeState extends State<ScanQrCode> {
+  final String qrData = "qkWyne";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,10 +81,25 @@ class _ScanQrCodeState extends State<ScanQrCode> {
                 child: Column(
                   children: [
                     SizedBox(height: 40,),
-
-                    Container(
-                        child: Image.asset("assets/images/scanQR/qr.png"),
-                      ),
+                        Container(
+                          child: Center(
+                            child: QrImageView(
+                              data: qrData,
+                              version: QrVersions.auto,
+                              size: 280,
+                              backgroundColor: Colors.white,
+                              eyeStyle: QrEyeStyle(
+                                eyeShape: QrEyeShape.square,
+                                color: Color(0xFF4D5E47),
+                              ),
+                              dataModuleStyle: QrDataModuleStyle(
+                                dataModuleShape: QrDataModuleShape.square,
+                                color: Color(0xFF4D5E47),
+                              ),
+                            ),
+                          ),
+                          // child: Image.asset("assets/images/scanQR/qr.png"),
+                        ),
                     SizedBox(height: 40,),
                     Container(
                       width: 290,
@@ -115,7 +132,7 @@ class _ScanQrCodeState extends State<ScanQrCode> {
                   ],
                 ),
               ),
-        
+
             ],
           ),
         ),
