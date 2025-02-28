@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class EditAccount extends StatefulWidget {
   const EditAccount({super.key});
 
@@ -17,6 +22,8 @@ class _EditAccountState extends State<EditAccount> {
   GlobalKey<FormState> _FormKey = GlobalKey<FormState>();
   String uid = FirebaseAuth.instance.currentUser!.uid;
   String? selectedGender;
+  final ImagePicker _picker = ImagePicker();
+  File? _image;
 
 
   _updateProfile(docID) async {
@@ -37,11 +44,43 @@ class _EditAccountState extends State<EditAccount> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _loadUserData();
+
+  Future<void> pickImage() async {
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile == null) return;
+
+    File imageFile = File(pickedFile.path);
+    setState(() {
+      _image = imageFile;
+    });
+
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('saved_image', base64Image);
+    print("Image Saved in SharedPreferences");
   }
+
+  Future<void> loadImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? base64Image = prefs.getString('saved_image');
+
+    if (base64Image != null) {
+      List<int> imageBytes = base64Decode(base64Image);
+      File imageFile = File('${Directory.systemTemp.path}/temp_image.png');
+      await imageFile.writeAsBytes(imageBytes);
+
+      setState(() {
+        _image = imageFile;
+      });
+      print("Image Loaded from SharedPreferences");
+    } else {
+      print("No Image Found!");
+    }
+  }
+
+
 
   _loadUserData() async {
     try {
@@ -52,8 +91,8 @@ class _EditAccountState extends State<EditAccount> {
         Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
 
         setState(() {
-          _firstnameController.text = data["userName"] ?? "";
-          _lastnameController.text = data["userName"] ?? "";
+          _firstnameController.text = data["firstName"] ?? "";
+          _lastnameController.text = data["lastName"] ?? "";
           _phoneNoController.text = data["userPhoneNo"] ?? "";
           _datePickerController.text = data["userDOB"] ?? "";
           selectedGender = data["userGender"] ?? "";
@@ -64,11 +103,21 @@ class _EditAccountState extends State<EditAccount> {
     }
   }
 
+
   final List<Map<String, dynamic>> genderOptions = [
     {'value': 'male', 'label': 'Male',},
     {'value': 'female', 'label': 'Female',},
     {'value': 'other', 'label': 'Other',},
   ];
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+    loadImage();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +136,26 @@ class _EditAccountState extends State<EditAccount> {
                   child: Column(
                       children: [
                         Container(
-                          width: 150,
-                          height: 150,
-                          child:  CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: Image.asset("assets/images/editaccount/edit.png",),
+                          width: 160,  // Adjust according to your needs
+                          height: 160,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                          child: _image == null
+                              ? Center(child: Icon(Icons.person,size: 40,))
+                              : ClipOval(
+                            child: Image.file(
+                              File(_image!.path),
+                              fit: BoxFit.cover, 
+                              width: 160,
+                              height: 160,
+                            ),
                           ),
                         ),
+                        IconButton(onPressed: (){
+                          pickImage();
+                        }, icon: Icon(Icons.add_a_photo)),
                         Container(
                           alignment: Alignment(-0.8, 0),
                           child: Text("First Name",

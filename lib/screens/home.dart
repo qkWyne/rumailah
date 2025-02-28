@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/account_menu.dart';
 import 'package:rumailah/screens/home_page.dart';
@@ -5,6 +10,7 @@ import 'package:rumailah/screens/scan_qr_code.dart';
 import 'package:rumailah/screens/select_locator.dart';
 import 'package:rumailah/screens/select_order_menu.dart';
 import 'package:rumailah/screens/select_store_location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Home extends StatefulWidget {
    final String storeAddress ;
   const Home({super.key,required this.storeAddress});
@@ -14,6 +20,56 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  String firstName = "" ;
+  File? _image;
+
+
+  Future<void> loadImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? base64Image = prefs.getString('saved_image');
+
+    if (base64Image != null) {
+      List<int> imageBytes = base64Decode(base64Image);
+      File imageFile = File('${Directory.systemTemp.path}/temp_image.png');
+      await imageFile.writeAsBytes(imageBytes);
+
+      setState(() {
+        _image = imageFile;
+      });
+      print("Image Loaded from SharedPreferences");
+    } else {
+      print("No Image Found!");
+    }
+  }
+
+
+
+  _loadUserData() async {
+    try {
+      DocumentSnapshot userDoc =
+      await FirebaseFirestore.instance.collection("users").doc(uid).get();
+
+      if (userDoc.exists) {
+        Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
+
+        setState(() {
+          firstName = data["firstName"] ?? "";
+        });
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+    loadImage();
+  }
+
   int _selectedIndex = 0;
 
   // Screens List
@@ -42,15 +98,30 @@ class _HomeState extends State<Home> {
           },
           child: Row(
             children: [
-              CircleAvatar(
-                  child: Image.asset("assets/images/homepage/profile.png")
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: _image == null
+                    ? Center(child: Icon(Icons.person,size: 40,))
+                    : ClipOval(
+                  child: Image.file(
+                    File(_image!.path),
+                    fit: BoxFit.cover,
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
               ),
               SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Hi User Welcome to",
+                    "Hi $firstName Welcome to",
                     style: TextStyle(color: Color(0xFF6F726C), fontSize: 12),
                   ),
                  Row(

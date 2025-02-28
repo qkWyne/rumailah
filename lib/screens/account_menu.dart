@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/about_us.dart';
@@ -15,6 +19,7 @@ import 'package:rumailah/screens/select_order_menu.dart';
 import 'package:rumailah/screens/select_store_location.dart';
 import 'package:rumailah/screens/term_conditions.dart';
 import 'package:rumailah/screens/select_locator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountPage extends StatefulWidget {
   final storeName ;
@@ -25,17 +30,61 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   bool isDarkMode = false;
+  String firstName = "" ;
+  String lastName = "" ;
+  String phoneNo = "" ;
+  File? _image;
 
-  _signOut() async {
+
+  _loadUserData() async {
     try {
-      await FirebaseAuth.instance.signOut();
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginOtp()));
-    } on FirebaseAuthException catch (e) {
-      print("Error $e");
+      DocumentSnapshot userDoc =
+      await FirebaseFirestore.instance.collection("users").doc(uid).get();
+
+      if (userDoc.exists) {
+        Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
+
+        setState(() {
+          firstName = data["firstName"] ?? "";
+         lastName = data["lastName"] ?? "";
+          phoneNo= data["userPhoneNo"] ?? "";
+        });
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
     }
   }
+
+
+
+  Future<void> loadImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? base64Image = prefs.getString('saved_image');
+
+    if (base64Image != null) {
+      List<int> imageBytes = base64Decode(base64Image);
+      File imageFile = File('${Directory.systemTemp.path}/temp_image.png');
+      await imageFile.writeAsBytes(imageBytes);
+
+      setState(() {
+        _image = imageFile;
+      });
+      print("Image Loaded from SharedPreferences");
+    } else {
+      print("No Image Found!");
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+    loadImage();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +121,23 @@ class _AccountPageState extends State<AccountPage> {
             padding: EdgeInsets.all(12),
             child: Row(
               children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage(
-                      "assets/images/accountmenu/person.jpg"),
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: _image == null
+                      ? Center(child: Icon(Icons.person,size: 40,))
+                      : ClipOval(
+                    child: Image.file(
+                      File(_image!.path),
+                      fit: BoxFit.cover,
+                      width: 80,
+                      height: 80,
+                    ),
+                  ),
                 ),
                 SizedBox(width: 12),
 
@@ -83,10 +145,10 @@ class _AccountPageState extends State<AccountPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("User Name", style: TextStyle(
+                      Text("$firstName $lastName", style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 4),
-                      Text("+971 1234567890", style: TextStyle(
+                      Text(phoneNo, style: TextStyle(
                           color: Color(0xFF9AA39C), fontSize: 16)),
                     ],
                   ),
