@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:rumailah/main.dart';
 import 'package:rumailah/screens/select_language.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

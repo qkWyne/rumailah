@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,17 +7,13 @@ import 'package:rumailah/screens/about_us.dart';
 import 'package:rumailah/screens/edit_account.dart';
 import 'package:rumailah/screens/favorites_page.dart';
 import 'package:rumailah/screens/home.dart';
-import 'package:rumailah/screens/login_otp.dart';
 import 'package:rumailah/screens/logout.dart';
 import 'package:rumailah/screens/my_orders.dart';
-import 'package:rumailah/screens/order_view.dart';
 import 'package:rumailah/screens/privacy_policy.dart';
 import 'package:rumailah/screens/reward_point.dart';
 import 'package:rumailah/screens/scan_qr_code.dart';
-import 'package:rumailah/screens/select_order_menu.dart';
 import 'package:rumailah/screens/select_store_location.dart';
 import 'package:rumailah/screens/term_conditions.dart';
-import 'package:rumailah/screens/select_locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountPage extends StatefulWidget {
@@ -81,8 +76,9 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
     loadImage();
+    _loadUserData();
+
   }
 
 
@@ -156,7 +152,14 @@ class _AccountPageState extends State<AccountPage> {
                 InkWell(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => EditAccount()));
+                          builder: (context) => EditAccount()
+                      )).then((value) {
+                        setState(() {
+                          loadImage();
+                          _loadUserData();
+
+                        });
+                      });
                     },
                     child: Image.asset(
                       "assets/images/accountmenu/edit.png", scale: 1.1,))

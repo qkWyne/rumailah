@@ -1,8 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:rumailah/screens/home.dart';
 import 'package:rumailah/screens/order_view.dart';
 import 'package:rumailah/screens/select_locator.dart';
 class HomePage extends StatefulWidget {

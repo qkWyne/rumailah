@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/select_locator.dart';
-import 'package:rumailah/screens/select_store_location.dart';
 class AllowLocation extends StatefulWidget {
   const AllowLocation({super.key});
 

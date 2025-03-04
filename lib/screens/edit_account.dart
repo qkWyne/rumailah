@@ -26,6 +26,7 @@ class _EditAccountState extends State<EditAccount> {
   File? _image;
 
 
+
   _updateProfile(docID) async {
     try {
       await FirebaseFirestore.instance.collection("users").doc(uid).update({
@@ -38,6 +39,9 @@ class _EditAccountState extends State<EditAccount> {
         "userDOB":_datePickerController.text,
       });
 
+      if (_image != null) {
+        await saveImage();
+      }
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print("Error $e");
@@ -47,20 +51,24 @@ class _EditAccountState extends State<EditAccount> {
 
   Future<void> pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
     if (pickedFile == null) return;
 
-    File imageFile = File(pickedFile.path);
     setState(() {
-      _image = imageFile;
+      _image = File(pickedFile.path);
     });
+  }
 
-    List<int> imageBytes = await imageFile.readAsBytes();
+  Future<void> saveImage() async {
+    if (_image == null) return;
+
+    List<int> imageBytes = await _image!.readAsBytes();
     String base64Image = base64Encode(imageBytes);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('saved_image', base64Image);
+
     print("Image Saved in SharedPreferences");
   }
+
 
   Future<void> loadImage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -135,27 +143,36 @@ class _EditAccountState extends State<EditAccount> {
                 key: _FormKey,
                   child: Column(
                       children: [
-                        Container(
-                          width: 160,  // Adjust according to your needs
-                          height: 160,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: _image == null
-                              ? Center(child: Icon(Icons.person,size: 40,))
-                              : ClipOval(
-                            child: Image.file(
-                              File(_image!.path),
-                              fit: BoxFit.cover, 
-                              width: 160,
-                              height: 160,
+                        Stack(
+                          children: [
+                            Container(
+                              width: 130,  // Adjust according to your needs
+                              height: 130,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: _image == null
+                                  ? Center(child: Icon(Icons.person,size: 40,))
+                                  : ClipOval(
+                                child: Image.file(
+                                  File(_image!.path),
+                                  fit: BoxFit.cover,
+                                  width: 130,
+                                  height: 130,
+                                ),
+                              ),
                             ),
-                          ),
+                            Positioned(
+                              left: 85,
+                              top: 95,
+                              child: IconButton(onPressed: (){
+                                pickImage();
+                              }, icon: Icon(Icons.add_a_photo)),
+                            ),
+                          ],
                         ),
-                        IconButton(onPressed: (){
-                          pickImage();
-                        }, icon: Icon(Icons.add_a_photo)),
+                        SizedBox(height: 10,),
                         Container(
                           alignment: Alignment(-0.8, 0),
                           child: Text("First Name",
@@ -322,6 +339,8 @@ class _EditAccountState extends State<EditAccount> {
                               },
                               decoration: InputDecoration(
                                   hintText: "Gender",
+                                  filled: true,
+                                  fillColor: Colors.white,
                                   hintStyle: TextStyle(color: Color(0xFFB9B7B7)),
                                   prefixIcon: Image.asset("assets/images/createaccount/gender.png",),
                                   focusedBorder: OutlineInputBorder(
@@ -370,17 +389,29 @@ class _EditAccountState extends State<EditAccount> {
                         Container(
                           width: 310,
                           child:  TextFormField(
-                            canRequestFocus: false,
                             keyboardType: TextInputType.none,
                             controller: _datePickerController,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
                               prefixIcon: Image.asset("assets/images/createaccount/dob.png",),
                               suffixIcon: Icon(Icons.calendar_month),
                               hintText: "Date of Birth",
-                              border: OutlineInputBorder(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 2,color: Color(0xFF4D5E47)),
                                 borderRadius: BorderRadius.circular(8),
+
                               ),
-                            ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(width: 2,color:Color(0xFFC3BDBD))
+                              ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide()
+                              ),
+
+                              ),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Required";

@@ -1,12 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:rumailah/screens/allow_location.dart';
 import 'package:rumailah/screens/create_account.dart';
 import 'package:rumailah/screens/forgot_password.dart';
-import 'package:rumailah/screens/home.dart';
-import 'package:rumailah/screens/otp_verify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginOtp extends StatefulWidget {

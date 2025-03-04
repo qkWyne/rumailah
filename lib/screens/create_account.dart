@@ -4,8 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rumailah/screens/allow_location.dart';
-import 'package:rumailah/screens/home.dart';
-import 'package:rumailah/screens/login_otp.dart';
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
 

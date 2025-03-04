@@ -77,7 +77,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
         child: ListView.builder(
           itemCount: favoriteList.length,
           itemBuilder: (context, index) {
-            final store = favoriteList[index];
             return Container(
                 width: 300,
                 height: 150,
