@@ -11,6 +11,7 @@ class SelectStoreLocation extends StatefulWidget {
 
 class _SelectStoreLocationState extends State<SelectStoreLocation> {
   int? selectedIndex;
+  String _searchQuery = "";
   final List<Map<String, dynamic>> stores = [
     {
       "name": "Rumailah Café - Corniche",
@@ -50,6 +51,10 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> filteredStores = stores
+        .where((store) =>
+        store["name"].toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -102,6 +107,11 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                           width: 350,
                           height: 60,
                           child: TextField(
+                            onChanged:  (value) {
+                              setState(() {
+                                _searchQuery = value;
+                              });
+                            },
                             decoration: InputDecoration(
                               hintText: "Search Store",
                               hintStyle: TextStyle(color: Color(0xFF65656F)),
@@ -136,9 +146,9 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                     child: Padding(
                       padding: EdgeInsets.all(16),
                       child: ListView.builder(
-                        itemCount: stores.length,
+                        itemCount: filteredStores.length,
                         itemBuilder: (context, index) {
-                          final store = stores[index];
+                          final store = filteredStores[index];
                           final storeName =store["name"];
                           return GestureDetector(
                             onTap: () {
@@ -186,7 +196,7 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${stores[index]["name"]}",
+                                          "${store["name"]}",
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -196,14 +206,14 @@ class _SelectStoreLocationState extends State<SelectStoreLocation> {
                                         ),
                                         SizedBox(height: 4),
                                         Text(
-                                          "${stores[index]["distance"]}",
+                                          "${store["distance"]}",
                                           style: TextStyle(
                                               color: Color(0xFF07074F),
                                               fontSize: 14),
                                         ),
                                         SizedBox(height: 4),
                                         Text(
-                                          stores[index]["address"].toString(),
+                                          store["address"].toString(),
                                           style: TextStyle(
                                               color: Colors.black, fontSize: 13),
                                         ),

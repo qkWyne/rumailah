@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:rumailah/screens/checkout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class DetailPage extends StatefulWidget {
+  final String storeName;
   final Map<String, dynamic> item;
 
-  DetailPage({required this.item});
+  DetailPage({required this.item,required this.storeName});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -179,7 +180,7 @@ class _DetailPageState extends State<DetailPage> {
                                     backgroundColor:Color(0xFF4D5E47),
                                     foregroundColor: Colors.white),
                                 onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutScreen()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutScreen(storeName: widget.storeName,)));
                                 }, child: Text("Add Cart",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                           ),
                         ],

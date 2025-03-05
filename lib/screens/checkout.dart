@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:rumailah/screens/payment_page.dart';
 
 class CheckoutScreen extends StatefulWidget {
+  final storeName;
+  const CheckoutScreen({super.key,required this.storeName});
+
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
 }
@@ -287,7 +290,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         backgroundColor:Color(0xFF4D5E47),
                         foregroundColor: Colors.white),
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> PaymentPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> PaymentPage(storeName: widget.storeName,)));
                     }, child: Text("Order",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
               ),
             ],

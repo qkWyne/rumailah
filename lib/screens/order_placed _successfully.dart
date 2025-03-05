@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rumailah/screens/home.dart';
 import 'package:rumailah/screens/my_orders.dart';
 class OrderPlacedSuccessfully extends StatefulWidget {
-  const OrderPlacedSuccessfully({super.key});
+  final storeName;
+  const OrderPlacedSuccessfully({super.key,required this.storeName});
 
   @override
   State<OrderPlacedSuccessfully> createState() => _OrderPlacedSuccessfullyState();
@@ -58,6 +60,11 @@ class _OrderPlacedSuccessfullyState extends State<OrderPlacedSuccessfully> {
                             backgroundColor:Color(0xFF4D5E47),
                             foregroundColor: Colors.white),
                         onPressed: (){
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => Home(storeAddress: widget.storeName)),
+                                (Route<dynamic> route) => false,
+                          );
                         }, child: Text("Continue",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
                   ),
                   TextButton(onPressed: () {

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:rumailah/screens/order_view.dart';
 import 'package:rumailah/screens/select_locator.dart';
 class HomePage extends StatefulWidget {
-  const HomePage({super.key,});
+  final storeName;
+  const HomePage({super.key,required this.storeName});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 16),
     GestureDetector(
     onTap: () {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderView()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderView(storeName: widget.storeName,)));
     },
     child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,7 +162,7 @@ class _HomePageState extends State<HomePage> {
               children: products.map((product) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderView()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderView(storeName: widget.storeName,)));
                   },
                   child: Container(
                     width: 160,

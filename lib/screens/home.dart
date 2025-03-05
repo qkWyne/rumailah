@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
 
   // Screens List
   List<Widget> get _screens => [
-    HomePage(),
+    HomePage(storeName: widget.storeAddress,),
     ScanQrCode(),
     SelectStoreLocation(),
     AccountPage(storeName: widget.storeAddress),
