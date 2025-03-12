@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:rumailah/screens/order_view.dart';
+import 'package:rumailah/screens/reward_point.dart';
 import 'package:rumailah/screens/select_locator.dart';
 class HomePage extends StatefulWidget {
   final storeName;
@@ -111,11 +112,16 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     TextButton(onPressed: (){
-                    }, child: Row(
-                      children: [
-                        Text("View Rewards",style: TextStyle(fontSize: 13,color: Colors.white),),
-                        Icon(Icons.arrow_forward_ios,color: Colors.white,)
-                      ],
+                    }, child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => RewardPointsScreen()));
+                      },
+                      child: Row(
+                        children: [
+                          Text("View Rewards",style: TextStyle(fontSize: 13,color: Colors.white),),
+                          Icon(Icons.arrow_forward_ios,color: Colors.white,)
+                        ],
+                      ),
                     ))
                   ],
                 ),

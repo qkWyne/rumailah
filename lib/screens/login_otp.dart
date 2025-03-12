@@ -13,6 +13,7 @@ class LoginOtp extends StatefulWidget {
 }
 
 class _LoginOtpState extends State<LoginOtp> {
+  final Color greenColor =  Color(0xFF4D5E47);
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -37,7 +38,7 @@ class _LoginOtpState extends State<LoginOtp> {
   void loadUserLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _emailController.text = prefs.getString('email') ?? '';
+      _emailController.text =  prefs.getString('email') ?? '';
       _passwordController.text = prefs.getString('password') ?? '';
       rememberMe = prefs.getBool('rememberMe') ?? false;
     });
@@ -47,16 +48,16 @@ class _LoginOtpState extends State<LoginOtp> {
   Future<void> saveUserLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (rememberMe) {
-      prefs.setString('email', _emailController.text);
-      prefs.setString('password', _passwordController.text);
+      await prefs.setString('email', _emailController.text);
+      await prefs.setString('password', _passwordController.text);
+      await prefs.setBool('rememberMe', true);
     } else {
-      prefs.clear();
+      await prefs.clear();
     }
   }
 
 
   void _login() async {
-    if (!_formKey.currentState!.validate()) return;
 
     setState(() {
       isLoading = true;
@@ -134,7 +135,7 @@ class _LoginOtpState extends State<LoginOtp> {
       child:Stack(
         children: [
           Scaffold(
-            backgroundColor: Color(0xFF4D5E47),
+            backgroundColor: greenColor,
             body: Column(
               children: [
                 Container(
@@ -164,7 +165,7 @@ class _LoginOtpState extends State<LoginOtp> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
-                                      color: Color(0xFF4D5E47)),
+                                      color: greenColor),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -196,22 +197,23 @@ class _LoginOtpState extends State<LoginOtp> {
                               Container(
                                 width: 310,
                                 child: TextFormField(
+                                  cursorColor: greenColor,
                                   controller: _emailController,
                                   decoration: InputDecoration(
                                       label: Text(
                                         "Email",
-                                        style: TextStyle(color: Color(0xFF4D5E47)),
+                                        style: TextStyle(color: greenColor),
                                       ),
-                                      labelStyle: TextStyle(color: Color(0xFF4D5E47)),
+                                      labelStyle: TextStyle(color: greenColor),
                                       hintText: "Enter Email",
                                       hintStyle: TextStyle(color: Color(0xFFB9B7B7)),
                                       prefixIcon: Icon(
                                         Icons.email_rounded,
-                                        color: Color(0xFF4D5E47),
+                                        color: greenColor,
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            width: 2, color: Color(0xFF4D5E47)),
+                                            width: 2, color: greenColor),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       enabledBorder: OutlineInputBorder(
@@ -239,19 +241,20 @@ class _LoginOtpState extends State<LoginOtp> {
                               Container(
                                 width: 310,
                                 child: TextFormField(
+                                  cursorColor: greenColor,
                                   controller: _passwordController,
                                   obscureText: obscure,
                                   decoration: InputDecoration(
                                       label: Text(
                                         "Password",
-                                        style: TextStyle(color: Color(0xFF4D5E47)),
+                                        style: TextStyle(color: greenColor),
                                       ),
-                                      labelStyle: TextStyle(color: Color(0xFF4D5E47)),
+                                      labelStyle: TextStyle(color: greenColor),
                                       hintText: "Enter Password",
                                       hintStyle: TextStyle(color: Color(0xFFB9B7B7)),
                                       prefixIcon: Icon(
                                         Icons.password_rounded,
-                                        color: Color(0xFF4D5E47),
+                                        color: greenColor,
                                       ),
                                       suffixIcon: IconButton(
                                           onPressed: () {
@@ -263,11 +266,11 @@ class _LoginOtpState extends State<LoginOtp> {
                                             obscure
                                                 ? Icons.visibility_off_outlined
                                                 : Icons.visibility_outlined,
-                                            color: Colors.grey.shade800,
+                                            color: greenColor,
                                           )),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            width: 2, color: Color(0xFF4D5E47)),
+                                            width: 2, color: greenColor),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       enabledBorder: OutlineInputBorder(
@@ -324,7 +327,7 @@ class _LoginOtpState extends State<LoginOtp> {
                               Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     InkWell(
                                       child: Container(
@@ -349,14 +352,17 @@ class _LoginOtpState extends State<LoginOtp> {
                                       children: [
                                         Checkbox(
                                           value: rememberMe,
-                                          activeColor: Color(0xFF4D5E47),
+                                          activeColor: greenColor,
                                           onChanged: (value) {
                                             setState(() {
                                               rememberMe = value!;
                                             });
                                           },
                                         ),
-                                        Text("Remember Me"),
+                                        Text("Remember Me",style: TextStyle(
+                                            color: rememberMe ? greenColor:Colors.black,
+                                          fontWeight: rememberMe ? FontWeight.bold : FontWeight.normal
+                                        ),),
                                       ],
                                     ),
                                   ],
@@ -387,7 +393,7 @@ class _LoginOtpState extends State<LoginOtp> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8.0),
                                       ),
-                                      backgroundColor: Color(0xFF4D5E47),
+                                      backgroundColor: greenColor,
                                       foregroundColor: Colors.white),
                                   onPressed:() {
                                     if (_formKey.currentState!.validate()) {

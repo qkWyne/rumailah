@@ -22,10 +22,10 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           Container(color: Color(0xFF4D5E47),),
-          Center(
+          Positioned.fill(
             child: Image.asset("assets/images/splashscreen/bg.png")
     ),
-          Center(
+          Positioned.fill(
             child: Image.asset("assets/images/splashscreen/logo.png",)
     ),
         ],

@@ -127,6 +127,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             Container(
                               width: 310,
                               child: TextFormField(
+                                cursorColor: Color(0xFF4D5E47),
                                 textCapitalization: TextCapitalization.sentences,
                                 controller: _firstnameController,
                                 decoration: InputDecoration(
@@ -175,6 +176,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             Container(
                               width: 310,
                               child: TextFormField(
+                                cursorColor: Color(0xFF4D5E47),
                                 textCapitalization: TextCapitalization.sentences,
                                 controller: _lastnameController,
                                 decoration: InputDecoration(
@@ -223,6 +225,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             Container(
                               width: 310,
                               child: TextFormField(
+                                cursorColor: Color(0xFF4D5E47),
                                 keyboardType: TextInputType.phone,
                                 controller: _phoneNoController,
                                 decoration: InputDecoration(
@@ -270,6 +273,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             Container(
                               width: 310,
                               child: TextFormField(
+                                cursorColor: Color(0xFF4D5E47),
                                 controller: _emailController,
                                 decoration: InputDecoration(
                                     hintText: "Enter Email",
@@ -318,6 +322,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             Container(
                               width: 310,
                               child: TextFormField(
+                                cursorColor: Color(0xFF4D5E47),
                                 controller: _passwordController,
                                 obscureText: obscure1,
                                 decoration: InputDecoration(
@@ -380,6 +385,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             Container(
                               width: 310,
                               child: TextFormField(
+                                cursorColor: Color(0xFF4D5E47),
                                 controller: _confirmpasswordController,
                                 obscureText: obscure2,
                                 decoration: InputDecoration(

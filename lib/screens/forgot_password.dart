@@ -74,6 +74,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       Container(
                         width: 310,
                         child: TextFormField(
+                          cursorColor: Color(0xFF4D5E47),
                           controller: _emailController,
                           decoration: InputDecoration(
                               label: Text("Email",style: TextStyle(color: Color(0xFF4D5E47)),),

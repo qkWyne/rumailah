@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rumailah/screens/select_locator.dart';
 import 'package:rumailah/screens/splash_screen.dart';
 
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

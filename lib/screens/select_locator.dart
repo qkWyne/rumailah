@@ -140,6 +140,7 @@ class _SelectLocatorState extends State<SelectLocator> {
                               width: 350,
                               height: 60,
                               child: TextField(
+                                cursorColor: Color(0xFF4D5E47),
                                 onChanged:  (value) {
                                   setState(() {
                                     _searchQuery = value;

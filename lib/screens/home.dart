@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,11 +46,10 @@ class _HomeState extends State<Home> {
 
   _loadUserData() async {
     try {
-      DocumentSnapshot userDoc =
-      await FirebaseFirestore.instance.collection("users").doc(uid).get();
+      DocumentSnapshot userData = await FirebaseFirestore.instance.collection("users").doc(uid).get();
 
-      if (userDoc.exists) {
-        Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
+      if (userData.exists) {
+        Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
 
         setState(() {
           firstName = data["firstName"] ?? "";
